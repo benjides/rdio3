@@ -1,5 +1,9 @@
 <?php
 
+
+use App\Program;
+use App\Podcast;
+use Illuminate\Support\Facades\Input;
 /*
 |--------------------------------------------------------------------------
 | Application Routes
@@ -12,5 +16,24 @@
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return "rdio 3 API";
+});
+
+
+Route::get('/program', function () {
+    $programs = Program::get();
+    return response()->json($programs);
+});
+
+Route::get('/program/{program}', function ($program) {
+    $podcasts = Program::where('route','=', $program)->first()->podcasts()
+                      ->orderBy('date','desc')->paginate();
+    return response()->json($podcasts);
+});
+
+Route::get('/program/{program}/search', function ($program) {
+  $query = Input::get('q');
+  $podcasts = Program::where('route','=', $program)->first()->podcasts()
+                    ->where('title','like','%'.$query.'%')->orderBy('date','desc')->paginate();
+  return response()->json($podcasts);
 });
