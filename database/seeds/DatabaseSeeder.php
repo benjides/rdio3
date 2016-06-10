@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Database\Seeder;
-use Illuminate\Database\Eloquent\Model;
+use App\Program;
 
 class DatabaseSeeder extends Seeder
 {
@@ -12,10 +12,15 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        Model::unguard();
-
-        // $this->call(UserTableSeeder::class);
-
-        Model::reguard();
+      Program::create([
+        'name' => 'Siglo 21',
+        'route' => 'siglo-21',
+        'link' => 'http://www.rtve.es/alacarta/interno/contenttable.shtml?pbq=1&orderCriteria=DESC&modl=TOC&locale=es&pageSize=15&ctx=2082',
+      ]);
+      Program::create([
+        'name' => '180 Grados',
+        'route' => '180-grados',
+        'link' => 'http://www.rtve.es/alacarta/interno/contenttable.shtml?pbq=1&orderCriteria=DESC&modl=TOC&locale=es&pageSize=15&ctx=22270',
+      ]);
     }
 }
