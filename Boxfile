@@ -62,6 +62,7 @@ worker1:
   log_watch:
     laravel[error]: 'storage/logs/laravel.log
 
+
 database1:
   type: mysql
   version: 5.6
