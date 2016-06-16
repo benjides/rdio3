@@ -60,8 +60,7 @@ worker1:
   nonpersistent_writable_dirs:
     - storage/cache
   log_watch:
-    laravel[error]: 'storage/logs/laravel.log
-
+    laravel[error]: 'storage/logs/laravel.log'
 
 database1:
   type: mysql
