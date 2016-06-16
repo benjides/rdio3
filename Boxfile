@@ -52,6 +52,7 @@ worker1:
     - mbstring
     - mcrypt
     - tokenizer
+    - pdo_mysql
     - xcache
     - redis
   network_dirs:
