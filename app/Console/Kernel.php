@@ -13,7 +13,8 @@ class Kernel extends ConsoleKernel
      * @var array
      */
     protected $commands = [
-        \App\Console\Commands\InitPodcasts::class
+        \App\Console\Commands\InitPodcasts::class,
+        \App\Console\Commands\UpdatePodcasts::class,
     ];
 
     /**
@@ -24,6 +25,7 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-        
+      $schedule->command('podcasts:update')
+              ->dailyAt('14:30');
     }
 }

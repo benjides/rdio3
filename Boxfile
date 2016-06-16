@@ -45,6 +45,23 @@ web1:
     - 'composer dump-autoload --optimize'
     - 'php artisan cache:clear --no-interaction'
 
+worker1:
+  exec: 'php artisan queue:listen --timeout=180 --tries=3 --queue="podcast,table,page"'
+  php_extensions:
+    - json
+    - mbstring
+    - mcrypt
+    - tokenizer
+    - xcache
+    - redis
+  network_dirs:
+    - storage/framework
+    - storage/app
+  nonpersistent_writable_dirs:
+    - storage/cache
+  log_watch:
+    laravel[error]: 'storage/logs/laravel.log
+
 database1:
   type: mysql
   version: 5.6

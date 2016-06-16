@@ -4,6 +4,7 @@
 use App\Program;
 use App\Podcast;
 use Illuminate\Support\Facades\Input;
+use Goutte\Client;
 /*
 |--------------------------------------------------------------------------
 | Application Routes
@@ -27,7 +28,7 @@ Route::get('/program', function () {
 
 Route::get('/program/{program}', function ($program) {
     $podcasts = Program::where('route','=', $program)->first()->podcasts()
-                      ->orderBy('date','desc')->paginate();
+                      ->orderBy('date','desc')->paginate(30);
     return response()->json($podcasts);
 });
 
@@ -37,3 +38,9 @@ Route::get('/program/{program}/search', function ($program) {
                     ->where('title','like','%'.$query.'%')->orderBy('date','desc')->paginate();
   return response()->json($podcasts);
 });
+
+Route::get('/init', 'PodcastsController@init');
+Route::get('/init/{program}', 'PodcastsController@initProgram');
+
+Route::get('/update', 'PodcastsController@update');
+Route::get('/update{program}', 'PodcastsController@updateProgram');

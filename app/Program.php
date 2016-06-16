@@ -7,7 +7,7 @@ class Program extends Model {
   protected $fillable = [
     'name',
 		'route',
-		'link'
+		'link',
   ];
   protected $hidden = ['id','link','created_at','updated_at'];
 

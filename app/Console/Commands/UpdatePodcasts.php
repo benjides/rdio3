@@ -2,15 +2,12 @@
 
 namespace App\Console\Commands;
 
-use Illuminate\Console\Command;
+use App\Jobs\UpdateCrawler;
 use App\Program;
-
-use App\Jobs\PageCrawler;
-
+use Illuminate\Console\Command;
 use Illuminate\Foundation\Bus\DispatchesJobs;
 
-
-class InitPodcasts extends Command
+class UpdatePodcasts extends Command
 {
     use DispatchesJobs;
     /**
@@ -18,14 +15,14 @@ class InitPodcasts extends Command
      *
      * @var string
      */
-    protected $signature = 'podcasts:init {program}';
+    protected $signature = 'podcasts:update';
 
     /**
      * The console command description.
      *
      * @var string
      */
-    protected $description = 'Start scrapping through the web to fill the databses with initial data.';
+    protected $description = 'Updates the podcasts with the lastest data';
 
     /**
      * Create a new command instance.
@@ -44,10 +41,11 @@ class InitPodcasts extends Command
      */
     public function handle()
     {
-      $argv = $this->argument('program');
-      $program = Program::where('route','=',$argv)->first();
-      $this->info("Crawling : ".$program->name);
-      $job = (new PageCrawler($program , $program->link))->onQueue("page");
-      $this->dispatch($job);
+        $programs = Program::all();
+        foreach($programs as $program){
+            $this->info("Updating : ".$program->name);
+            $job = (new UpdateCrawler($program,$program->link))->onQueue("podcast");
+            $this->dispatch($job);
+        }
     }
 }
