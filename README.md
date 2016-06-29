@@ -6,7 +6,8 @@ Restful API to get the contents of the different programs of [Radio 3](http://ww
 # Table of Contents
 
 - [Installation](#installation)
-- [How to Use](#)
+- [How to Use](#howtouse)
+- [API Verbs](#apiverbs)
 - [Contributing](#contributing)
 - [Dependencies](#dependencies)
 - [License](#license)
@@ -22,6 +23,39 @@ Then don't forget to seed the database with initial data by running.
 ```sh
   php artisan migrate --seed
 ```
+## How to Use
+To start filling up the database with podcasts make sure the programs table is filled with some initial data. Then run the command:
+```sh
+  php artisan queue:listen --timeout=180 --tries=3 --queue="podcast,table,page"
+```
+The following command sets a queue which will listen to new requests.
+Then go to to
+
+`http:\\path\init\{program}`
+
+Where program is an optional parameter which specifies the program to be crawled.
+
+To update the podcasts you can manually use:
+```sh
+  php artisan podcasts:update
+```
+Go to the route
+`http:\\path\update\{program}`
+
+Or setting a cron job in the server with the following code:
+```sh
+  * * * * * php /path/to/artisan schedule:run >> /dev/null 2>&1
+```
+## API Verbs
+
+`GET`
+
+| Route                | Meaning                                                    |
+| -------------        |-------------                                               |
+| `\program`           | Get a list of available programs                           |
+| `\program\{program}` | Get the list of podcasts sorted by date and paginated      |
+| `\init\{program}`    | Populates the tables with initial data                     |
+| `update\{program}`   | Updates the tables with the lastest data                   |
 
 ## Contributing
 Feel free to fork the original repository and make changes on the code or the interface.
@@ -31,20 +65,13 @@ Before making any pull request make sure:
 * Avoid obfuscating code.
 * It is a major change.
 
-For any minor changes or requests use:
-* The dedicated forum thread. [Link](#)
-* GitHub issues' tracker. [Link](https://github.com/benjides/terrabattlez/issues)
-* Twitter official account. [Link](https://twitter.com/TerraBattleZ)
-* Mail account. [Link](mailto:zterrabattle@gmail.com)
-
-Thanks for your collaboration. Without you this would be nothing.
+Thanks for your collaboration.
 
 
 ## Dependencies
- - [Laravel](https://laravel.com/)
- - [Bootstrap](http://getbootstrap.com/)
+ - [Laravel 5.2](https://laravel.com/)
  - [Composer](https://getcomposer.org/)
- - [OpenShift](https://openshift.redhat.com/)
+
 
 ## License
-TerraBattleZ is released under the MIT Licence.
+Rdio3 is released under the MIT Licence.
